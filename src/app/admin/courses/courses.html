@@ -1,0 +1,177 @@
+<!-- Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Sidebar -->
+<app-sidebar></app-sidebar>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="content-wrapper">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1>Courses Management</h1>
+        <p>Manage all courses in the system</p>
+      </div>
+      <button class="btn-add" (click)="openAddModal()">
+        <span>+ Add Course</span>
+      </button>
+    </div>
+
+    <!-- Filters & Search -->
+    <div class="toolbar">
+      <div class="search-box">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Search courses..."
+          class="search-input"
+        />
+      </div>
+
+      <div class="filter-box">
+        <select [(ngModel)]="filterDepartment" class="filter-select">
+          <option value="all">All Departments</option>
+          <option *ngFor="let dept of departments" [value]="dept._id">
+            {{ dept.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading courses...</p>
+    </div>
+
+    <!-- Courses Grid -->
+    <div *ngIf="!isLoading" class="courses-grid">
+      <div *ngFor="let course of filteredCourses" class="course-card">
+        <div class="card-header">
+          <div class="course-icon">📚</div>
+          <div>
+            <h3>{{ course.title }}</h3>
+            <span class="dept-badge">{{ getDepartmentName(course.department) }}</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>{{ course.description || 'No description available' }}</p>
+          <div class="course-meta">
+            <span class="students-count">👥 {{ getStudentsCount(course) }} Students</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-students" (click)="openStudentsModal(course)">Manage Students</button>
+          <button class="btn-edit" (click)="openEditModal(course)">Edit</button>
+          <button class="btn-delete" (click)="deleteCourse(course)">Delete</button>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="filteredCourses.length === 0" class="empty-state">
+        <div class="empty-icon">📖</div>
+        <p>No courses found</p>
+        <button class="btn-add" (click)="openAddModal()">Add First Course</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ isEditMode ? 'Edit Course' : 'Add New Course' }}</h2>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+
+    <form (ngSubmit)="saveCourse()">
+      <div class="form-group">
+        <label>Course Title *</label>
+        <input
+          type="text"
+          [(ngModel)]="formData.title"
+          name="title"
+          placeholder="e.g. Introduction to Programming"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Department *</label>
+        <select [(ngModel)]="formData.department" name="department" required>
+          <option value="">Select Department</option>
+          <option *ngFor="let dept of departments" [value]="dept._id">
+            {{ dept.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea
+          [(ngModel)]="formData.description"
+          name="description"
+          rows="4"
+          placeholder="Enter course description..."
+        ></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn-save">
+          {{ isEditMode ? 'Update' : 'Create' }} Course
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Manage Students Modal -->
+<div class="modal-overlay" *ngIf="showStudentsModal" (click)="closeStudentsModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Manage Students - {{ selectedCourse?.title }}</h2>
+      <button class="close-btn" (click)="closeStudentsModal()">×</button>
+    </div>
+
+    <form>
+      <!-- Enrolled Students -->
+      <div class="form-group">
+        <label>Enrolled Students</label>
+        <div class="students-section">
+          <ul>
+            <li *ngFor="let studentId of selectedStudents">
+              <span>{{ getStudentName(studentId) }}</span>
+              <button type="button" class="btn-remove" (click)="removeStudent(studentId)">
+                Remove
+              </button>
+            </li>
+          </ul>
+          <p *ngIf="selectedStudents.length === 0" class="empty-list">No students enrolled</p>
+        </div>
+      </div>
+
+      <!-- Available Students -->
+      <div class="form-group">
+        <label>Available Students</label>
+        <div class="students-section">
+          <ul>
+            <li *ngFor="let student of availableStudents">
+              <span>{{ student.name }}</span>
+              <button type="button" class="btn-add" (click)="addStudent(student._id)">Add</button>
+            </li>
+          </ul>
+          <p *ngIf="availableStudents.length === 0" class="empty-list">No available students</p>
+        </div>
+      </div>
+
+      <!-- Modal Actions -->
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeStudentsModal()">Close</button>
+        <button type="button" class="btn-save" (click)="saveStudents()">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<!-- Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Sidebar -->
+<app-sidebar></app-sidebar>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="content-wrapper">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <h1>Welcome back, {{ currentUser?.name }}! 👋</h1>
+      <p>Here's your learning progress</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <!-- Enrolled Courses -->
+      <div class="stat-card blue">
+        <div class="stat-icon">📚</div>
+        <div class="stat-details">
+          <h3>{{ enrolledCoursesCount }}</h3>
+          <p>Enrolled Courses</p>
+        </div>
+        <a routerLink="/student/my-courses" class="stat-link">View Courses →</a>
+      </div>
+
+      <!-- Department -->
+      <div class="stat-card purple">
+        <div class="stat-icon">🏢</div>
+        <div class="stat-details">
+          <h3>{{ currentUser?.department?.name || 'N/A' }}</h3>
+          <p>Your Department</p>
+        </div>
+      </div>
+
+      <!-- Account Status -->
+      <div class="stat-card green">
+        <div class="stat-icon">{{ currentUser?.isConfirmed ? '✅' : '⏳' }}</div>
+        <div class="stat-details">
+          <h3>{{ currentUser?.isConfirmed ? 'Verified' : 'Pending' }}</h3>
+          <p>Account Status</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions-section">
+      <h2>Quick Actions</h2>
+      <div class="actions-grid">
+        <a routerLink="/student/my-courses" class="action-card">
+          <span class="action-icon">📖</span>
+          <span class="action-text">My Courses</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

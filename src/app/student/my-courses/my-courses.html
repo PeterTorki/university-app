@@ -1,0 +1,45 @@
+<!-- Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Sidebar -->
+<app-sidebar></app-sidebar>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="content-wrapper">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>My Courses</h1>
+      <p>All courses you are enrolled in</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading your courses...</p>
+    </div>
+
+    <!-- Courses Grid -->
+    <div *ngIf="!isLoading" class="courses-grid">
+      <div *ngFor="let course of myCourses" class="course-card">
+        <div class="card-header">
+          <div class="course-icon">📚</div>
+          <div>
+            <h3>{{ course.title }}</h3>
+            <span class="dept-badge">{{ course.department.name }}</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>{{ course.description || 'No description available' }}</p>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="myCourses.length === 0" class="empty-state">
+        <div class="empty-icon">📖</div>
+        <p>You are not enrolled in any courses yet</p>
+        <small>Contact your admin to enroll in courses</small>
+      </div>
+    </div>
+  </div>
+</div>

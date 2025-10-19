@@ -1,0 +1,94 @@
+<!-- Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Sidebar -->
+<app-sidebar></app-sidebar>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="content-wrapper">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Admin Dashboard</h1>
+      <p>Welcome back! Here's what's happening with your university system.</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading statistics...</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div *ngIf="!isLoading" class="stats-grid">
+      <!-- Total Users Card -->
+      <div class="stat-card purple">
+        <div class="stat-icon">👥</div>
+        <div class="stat-details">
+          <h3>{{ stats.totalUsers }}</h3>
+          <p>Total Users</p>
+          <small>{{ stats.adminCount }} Admins, {{ stats.studentCount }} Students</small>
+        </div>
+        <a routerLink="/admin/users" class="stat-link">View All →</a>
+      </div>
+
+      <!-- Total Departments Card -->
+      <div class="stat-card blue">
+        <div class="stat-icon">🏢</div>
+        <div class="stat-details">
+          <h3>{{ stats.totalDepartments }}</h3>
+          <p>Departments</p>
+          <small>Active departments</small>
+        </div>
+        <a routerLink="/admin/departments" class="stat-link">Manage →</a>
+      </div>
+
+      <!-- Total Courses Card -->
+      <div class="stat-card green">
+        <div class="stat-icon">📚</div>
+        <div class="stat-details">
+          <h3>{{ stats.totalCourses }}</h3>
+          <p>Total Courses</p>
+          <small>Available courses</small>
+        </div>
+        <a routerLink="/admin/courses" class="stat-link">View All →</a>
+      </div>
+
+      <!-- Quick Actions Card -->
+      <div class="stat-card orange">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-details">
+          <h3>Quick</h3>
+          <p>Actions</p>
+          <small>Manage system</small>
+        </div>
+        <div class="quick-actions">
+          <button routerLink="/admin/users" class="quick-btn">+ User</button>
+          <button routerLink="/admin/departments" class="quick-btn">+ Dept</button>
+          <button routerLink="/admin/courses" class="quick-btn">+ Course</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity Section -->
+    <div *ngIf="!isLoading" class="activity-section">
+      <div class="section-header">
+        <h2>Quick Links</h2>
+      </div>
+      <div class="quick-links-grid">
+        <a routerLink="/admin/users" class="quick-link-card">
+          <span class="link-icon">👥</span>
+          <span class="link-text">Manage Users</span>
+        </a>
+        <a routerLink="/admin/departments" class="quick-link-card">
+          <span class="link-icon">🏢</span>
+          <span class="link-text">Manage Departments</span>
+        </a>
+        <a routerLink="/admin/courses" class="quick-link-card">
+          <span class="link-icon">📚</span>
+          <span class="link-text">Manage Courses</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
