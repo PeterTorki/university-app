@@ -24,9 +24,6 @@ export class MyCoursesComponent implements OnInit {
     this.loadCourses();
   }
 
-  /**
-   * تحميل الكورسات
-   */
   loadCourses(): void {
     this.isLoading = true;
     this.courseService.getAllCourses().subscribe({
@@ -42,9 +39,6 @@ export class MyCoursesComponent implements OnInit {
     });
   }
 
-  /**
-   * فلترة الكورسات الخاصة بالطالب
-   */
   filterMyCourses(): void {
     const user = this.authService.currentUser();
     const enrolledCoursesIds = user?.enrolledCourses || [];

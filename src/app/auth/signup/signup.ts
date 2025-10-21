@@ -52,7 +52,6 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // التأكد من صحة الـ Form
     if (this.signupForm.invalid) {
       this.errorMessage = 'Please fill all fields correctly';
       this.markFormGroupTouched(this.signupForm);
@@ -63,7 +62,7 @@ export class SignupComponent implements OnInit {
     this.successMessage = '';
 
     const formData = { ...this.signupForm.value };
-    delete formData.confirmPassword; // مش محتاجينه في الـ API
+    delete formData.confirmPassword;
 
     if (!formData.department) {
       delete formData.department;

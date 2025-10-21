@@ -24,12 +24,10 @@ export class CoursesComponent implements OnInit {
   allUsers: UserResponse[] = [];
   isLoading: boolean = true;
 
-  // Modal States
   showModal: boolean = false;
   showStudentsModal: boolean = false;
   isEditMode: boolean = false;
 
-  // Form Data
   selectedCourse: Course | null = null;
   formData = {
     title: '',
@@ -37,11 +35,9 @@ export class CoursesComponent implements OnInit {
     department: '',
   };
 
-  // Students Management
   selectedStudents: string[] = [];
   availableStudents: UserResponse[] = [];
 
-  // Search & Filter
   searchTerm: string = '';
   filterDepartment: string = 'all';
 
@@ -56,9 +52,6 @@ export class CoursesComponent implements OnInit {
     this.loadDepartments();
   }
 
-  /**
-   * تحميل جميع الكورسات
-   */
   loadCourses(): void {
     this.isLoading = true;
     this.courseService.getAllCourses().subscribe({
@@ -74,9 +67,6 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  /**
-   * تحميل الأقسام
-   */
   loadDepartments(): void {
     this.departmentService.getAllDepartments().subscribe({
       next: (response) => {
@@ -88,9 +78,6 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  /**
-   * فتح Modal للإضافة
-   */
   openAddModal(): void {
     this.isEditMode = false;
     this.selectedCourse = null;
@@ -98,9 +85,6 @@ export class CoursesComponent implements OnInit {
     this.showModal = true;
   }
 
-  /**
-   * فتح Modal للتعديل
-   */
   openEditModal(course: Course): void {
     this.isEditMode = true;
     this.selectedCourse = course;
@@ -113,11 +97,9 @@ export class CoursesComponent implements OnInit {
   }
 
   getStudentsCount(course: Course): number {
-    // لو فيه students في الكورس
     if ((course as any).students && Array.isArray((course as any).students)) {
       return (course as any).students.length;
     }
-    // لو مفيش أو الباك اند مش بيرجعهم
     return 0;
   }
 
@@ -125,17 +107,14 @@ export class CoursesComponent implements OnInit {
     this.selectedCourse = course;
     this.showStudentsModal = true;
 
-    // جلب كل المستخدمين
     this.userService.getAllUsers().subscribe({
       next: (response) => {
         this.allUsers = response.message || [];
 
-        // الطلاب المسجلين في الكورس
         this.selectedStudents = (course.students || []).map((s) =>
           typeof s === 'string' ? s : s._id
         );
 
-        // الطلاب المتاحين للإضافة (غير المسجلين)
         this.availableStudents = this.allUsers.filter(
           (u) => u.role === 'student' && !this.selectedStudents.includes(u._id)
         );
@@ -144,9 +123,6 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  /**
-   * إغلاق Modal
-   */
   closeModal(): void {
     this.showModal = false;
     this.isEditMode = false;
@@ -154,9 +130,6 @@ export class CoursesComponent implements OnInit {
     this.resetForm();
   }
 
-  /**
-   * إعادة تعيين النموذج
-   */
   resetForm(): void {
     this.formData = {
       title: '',
@@ -165,9 +138,6 @@ export class CoursesComponent implements OnInit {
     };
   }
 
-  /**
-   * حفظ الكورس (إضافة أو تعديل)
-   */
   saveCourse(): void {
     if (!this.formData.title.trim() || !this.formData.department) {
       alert('Course title and department are required');
@@ -180,7 +150,7 @@ export class CoursesComponent implements OnInit {
         description: this.formData.description,
         department: {
           _id: this.formData.department,
-          name: '', // ممكن يفضل فاضي لو الـ backend مش محتاجه
+          name: '',
         },
       };
 
@@ -195,10 +165,7 @@ export class CoursesComponent implements OnInit {
           alert(error.error?.message || 'Failed to update course');
         },
       });
-    }
-
-    // ✅ حالة الإضافة
-    else {
+    } else {
       this.courseService.createCourse(this.formData).subscribe({
         next: () => {
           alert('Course created successfully!');
@@ -230,13 +197,11 @@ export class CoursesComponent implements OnInit {
 
   get filteredCourses(): Course[] {
     return this.courses.filter((course) => {
-      // Filter by search term
       const matchesSearch =
         !this.searchTerm ||
         course.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         course.description?.toLowerCase().includes(this.searchTerm.toLowerCase());
 
-      // Filter by department
       const deptId =
         typeof course.department === 'object' ? course.department._id : course.department;
       const matchesDepartment = this.filterDepartment === 'all' || deptId === this.filterDepartment;
@@ -245,9 +210,6 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  /**
-   * الحصول على اسم القسم
-   */
   getDepartmentName(department: any): string {
     if (typeof department === 'object' && department?.name) {
       return department.name;

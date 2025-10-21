@@ -6,7 +6,6 @@ import { environment } from '../environments/environments';
 import { AuthService } from './auth';
 import { Course } from '../interfaces/course';
 
-// Interface للـ Course
 
 @Injectable({
   providedIn: 'root',

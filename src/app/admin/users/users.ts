@@ -20,11 +20,9 @@ export class UsersComponent implements OnInit {
   departments: DepartmentResponse[] = [];
   isLoading: boolean = true;
 
-  // Modal States
   showModal: boolean = false;
   isEditMode: boolean = false;
 
-  // Form Data
   selectedUser: UserResponse | null = null;
   formData = {
     name: '',
@@ -34,7 +32,6 @@ export class UsersComponent implements OnInit {
     password: '',
   };
 
-  // Search & Filter
   searchTerm: string = '';
   filterRole: string = 'all';
 
@@ -45,9 +42,6 @@ export class UsersComponent implements OnInit {
     this.loadDepartments();
   }
 
-  /**
-   * تحميل جميع المستخدمين
-   */
   loadUsers(): void {
     this.isLoading = true;
     this.userService.getAllUsers().subscribe({
@@ -63,9 +57,6 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  /**
-   * تحميل الأقسام
-   */
   loadDepartments(): void {
     this.departmentService.getAllDepartments().subscribe({
       next: (response) => {
@@ -77,9 +68,6 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  /**
-   * فتح Modal للتعديل
-   */
   openEditModal(user: UserResponse): void {
     this.isEditMode = true;
     this.selectedUser = user;
@@ -88,14 +76,11 @@ export class UsersComponent implements OnInit {
       email: user.email,
       role: user.role,
       department: user.department?._id || '',
-      password: '', // لا نعرض الباسورد
+      password: '',
     };
     this.showModal = true;
   }
 
-  /**
-   * إغلاق Modal
-   */
   closeModal(): void {
     this.showModal = false;
     this.isEditMode = false;
@@ -103,9 +88,6 @@ export class UsersComponent implements OnInit {
     this.resetForm();
   }
 
-  /**
-   * إعادة تعيين النموذج
-   */
   resetForm(): void {
     this.formData = {
       name: '',
@@ -116,25 +98,19 @@ export class UsersComponent implements OnInit {
     };
   }
 
-  /**
-   * حفظ التعديلات
-   */
   saveUser(): void {
     if (!this.selectedUser) return;
 
-    // تجهيز البيانات
     const updateData: any = {
       name: this.formData.name,
       email: this.formData.email,
       role: this.formData.role,
     };
 
-    // إضافة الـ Department إذا تم اختياره
     if (this.formData.department) {
       updateData.department = this.formData.department;
     }
 
-    // إضافة الباسورد إذا تم إدخاله
     if (this.formData.password) {
       updateData.password = this.formData.password;
     }
@@ -169,7 +145,6 @@ export class UsersComponent implements OnInit {
 
   get filteredUsers(): UserResponse[] {
     return this.users.filter((user) => {
-      // Filter by search term
       const matchesSearch =
         !this.searchTerm ||
         user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||

@@ -44,9 +44,6 @@ export class BrowseCoursesComponent implements OnInit {
     });
   }
 
-  /**
-   * التحقق من الكورسات المسجل فيها الطالب
-   */
   checkEnrolledCourses(): void {
     this.myEnrolledIds = [];
     this.allCourses.forEach((course) => {
@@ -59,9 +56,6 @@ export class BrowseCoursesComponent implements OnInit {
     });
   }
 
-  /**
-   * التسجيل في كورس
-   */
   enrollCourse(course: Course): void {
     if (!confirm(`Enroll in "${course.title}"?`)) return;
 
@@ -85,9 +79,6 @@ export class BrowseCoursesComponent implements OnInit {
     });
   }
 
-  /**
-   * إلغاء التسجيل
-   */
   unenrollCourse(course: Course): void {
     if (!confirm(`Unenroll from "${course.title}"?`)) return;
 

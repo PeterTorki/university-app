@@ -36,9 +36,6 @@ export class AdminDashboardComponent implements OnInit {
     this.loadStats();
   }
 
-  /**
-   * تحميل الإحصائيات
-   */
   loadStats(): void {
     this.isLoading = true;
 
@@ -48,7 +45,6 @@ export class AdminDashboardComponent implements OnInit {
       this.courseService.getAllCourses().toPromise(),
     ])
       .then(([usersRes, deptsRes, coursesRes]) => {
-        // حساب الإحصائيات
         const users = usersRes?.message || [];
         this.stats.totalUsers = users.length;
         this.stats.adminCount = users.filter((u) => u.role === 'admin').length;

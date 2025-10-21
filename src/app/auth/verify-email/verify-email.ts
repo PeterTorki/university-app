@@ -24,7 +24,6 @@ export class VerifyEmailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // الحصول على الـ Token من الـ URL
     const token = this.route.snapshot.paramMap.get('token');
 
     if (token) {
@@ -35,9 +34,6 @@ export class VerifyEmailComponent implements OnInit {
     }
   }
 
-  /**
-   * التحقق من الإيميل
-   */
   verifyEmail(token: string): void {
     this.authService.verifyEmail(token).subscribe({
       next: (response) => {

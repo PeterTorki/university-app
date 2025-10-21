@@ -1,6 +1,6 @@
 .sidebar {
   position: fixed;
-  top: 70px; /* ارتفاع الـ Navbar */
+  top: 70px;
   left: 0;
   bottom: 0;
   width: 250px;
@@ -14,7 +14,6 @@
   padding: 20px 0;
 }
 
-/* Navigation */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
@@ -22,7 +21,6 @@
   padding: 0 15px;
 }
 
-/* Sidebar Items */
 .sidebar-item {
   display: flex;
   align-items: center;
@@ -60,7 +58,6 @@
   flex: 1;
 }
 
-/* Scrollbar Styling */
 .sidebar::-webkit-scrollbar {
   width: 6px;
 }
@@ -78,7 +75,6 @@
   background: #ccc;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .sidebar {
     width: 70px;

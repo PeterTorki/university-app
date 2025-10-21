@@ -29,7 +29,6 @@
   line-height: 1.6;
 }
 
-/* Loading Spinner */
 .spinner {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #667eea;
@@ -49,7 +48,6 @@
   }
 }
 
-/* Success Icon */
 .success-icon {
   width: 80px;
   height: 80px;
@@ -64,7 +62,6 @@
   animation: scaleIn 0.5s ease-out;
 }
 
-/* Error Icon */
 .error-icon {
   width: 80px;
   height: 80px;
@@ -90,7 +87,6 @@
   }
 }
 
-/* Error Message */
 .verification-state.error .error-message {
   background-color: #f8d7da;
   color: #721c24;
@@ -100,7 +96,6 @@
   margin: 20px 0;
 }
 
-/* Buttons */
 .btn-primary,
 .btn-secondary {
   display: inline-block;

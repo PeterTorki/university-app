@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../shared/navbar/navbar';
 import { SidebarComponent } from '../../shared/sidebar/sidebar';
 import { AuthService } from '../../services/auth';
+import { DepartmentService } from '../../services/department';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -15,15 +16,19 @@ import { AuthService } from '../../services/auth';
 export class StudentDashboardComponent implements OnInit {
   currentUser: any = null;
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, public departmentService: DepartmentService) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser();
+    if (this.currentUser && this.currentUser.department) {
+      this.departmentService
+        .getDepartmentById(this.currentUser.department)
+        .subscribe((response) => {
+          console.log(response);
+          this.currentUser.department = response.department;
+        });
+    }
   }
-
-  /**
-   * عدد الكورسات المسجلة
-   */
   get enrolledCoursesCount(): number {
     return this.currentUser?.enrolledCourses?.length || 0;
   }

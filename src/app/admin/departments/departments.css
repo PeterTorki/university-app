@@ -1,4 +1,3 @@
-/* Main Content Layout */
 .main-content {
   margin-left: 250px;
   margin-top: 70px;
@@ -12,7 +11,6 @@
   margin: 0 auto;
 }
 
-/* Page Header */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -50,7 +48,6 @@
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
-/* Toolbar */
 .toolbar {
   margin-bottom: 25px;
 }
@@ -73,7 +70,6 @@
   border-color: #667eea;
 }
 
-/* Loading */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -101,14 +97,12 @@
   }
 }
 
-/* Departments Grid */
 .departments-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 25px;
 }
 
-/* Department Card */
 .department-card {
   background: white;
   border-radius: 12px;
@@ -191,7 +185,6 @@
   transform: translateY(-2px);
 }
 
-/* Empty State */
 .empty-state {
   grid-column: 1 / -1;
   padding: 80px;
@@ -212,7 +205,6 @@
   margin-bottom: 25px;
 }
 
-/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -359,7 +351,6 @@
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .main-content {
     margin-left: 70px;

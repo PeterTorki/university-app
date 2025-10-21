@@ -17,18 +17,15 @@ export class DepartmentsComponent implements OnInit {
   departments: DepartmentResponse[] = [];
   isLoading: boolean = true;
 
-  // Modal States
   showModal: boolean = false;
   isEditMode: boolean = false;
 
-  // Form Data
   selectedDepartment: DepartmentResponse | null = null;
   formData = {
     name: '',
     description: '',
   };
 
-  // Search
   searchTerm: string = '';
 
   constructor(private departmentService: DepartmentService) {}
@@ -37,9 +34,6 @@ export class DepartmentsComponent implements OnInit {
     this.loadDepartments();
   }
 
-  /**
-   * تحميل جميع الأقسام
-   */
   loadDepartments(): void {
     this.isLoading = true;
     this.departmentService.getAllDepartments().subscribe({
@@ -55,9 +49,6 @@ export class DepartmentsComponent implements OnInit {
     });
   }
 
-  /**
-   * فتح Modal للإضافة
-   */
   openAddModal(): void {
     this.isEditMode = false;
     this.selectedDepartment = null;
@@ -65,9 +56,6 @@ export class DepartmentsComponent implements OnInit {
     this.showModal = true;
   }
 
-  /**
-   * فتح Modal للتعديل
-   */
   openEditModal(department: DepartmentResponse): void {
     this.isEditMode = true;
     this.selectedDepartment = department;
@@ -78,9 +66,6 @@ export class DepartmentsComponent implements OnInit {
     this.showModal = true;
   }
 
-  /**
-   * إغلاق Modal
-   */
   closeModal(): void {
     this.showModal = false;
     this.isEditMode = false;
@@ -88,9 +73,6 @@ export class DepartmentsComponent implements OnInit {
     this.resetForm();
   }
 
-  /**
-   * إعادة تعيين النموذج
-   */
   resetForm(): void {
     this.formData = {
       name: '',
@@ -98,9 +80,6 @@ export class DepartmentsComponent implements OnInit {
     };
   }
 
-  /**
-   * حفظ القسم (إضافة أو تعديل)
-   */
   saveDepartment(): void {
     if (!this.formData.name.trim()) {
       alert('Department name is required');
@@ -108,7 +87,6 @@ export class DepartmentsComponent implements OnInit {
     }
 
     if (this.isEditMode && this.selectedDepartment) {
-      // تعديل قسم موجود
       this.departmentService
         .updateDepartment(this.selectedDepartment._id, this.formData)
         .subscribe({
@@ -123,7 +101,6 @@ export class DepartmentsComponent implements OnInit {
           },
         });
     } else {
-      // إضافة قسم جديد
       this.departmentService.createDepartment(this.formData).subscribe({
         next: (response) => {
           alert('Department created successfully!');
@@ -138,9 +115,6 @@ export class DepartmentsComponent implements OnInit {
     }
   }
 
-  /**
-   * حذف قسم
-   */
   deleteDepartment(department: DepartmentResponse): void {
     if (!confirm(`Are you sure you want to delete "${department.name}"?`)) return;
 
@@ -156,9 +130,6 @@ export class DepartmentsComponent implements OnInit {
     });
   }
 
-  /**
-   * فلترة الأقسام
-   */
   get filteredDepartments(): DepartmentResponse[] {
     if (!this.searchTerm) return this.departments;
 

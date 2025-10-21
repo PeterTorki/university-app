@@ -4,8 +4,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { MenuItem } from '../../interfaces/menuItem';
 
-// Interface للـ Menu Items
-
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -15,7 +13,6 @@ import { MenuItem } from '../../interfaces/menuItem';
 })
 export class SidebarComponent {
   menuItems: MenuItem[] = [
-    // Admin Menu Items
     {
       icon: '📊',
       label: 'Dashboard',
@@ -40,7 +37,6 @@ export class SidebarComponent {
       route: '/admin/courses',
       roles: ['admin'],
     },
-    // Student Menu Items
     {
       icon: '📊',
       label: 'Dashboard',
@@ -63,9 +59,6 @@ export class SidebarComponent {
 
   constructor(public authService: AuthService) {}
 
-  /**
-   * فلترة العناصر حسب دور المستخدم
-   */
   get filteredMenuItems(): MenuItem[] {
     const user = this.authService.currentUser();
     if (!user) return [];

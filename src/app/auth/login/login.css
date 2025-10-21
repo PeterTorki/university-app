@@ -30,7 +30,6 @@
   font-size: 24px;
 }
 
-/* Alert Messages */
 .alert {
   padding: 12px;
   border-radius: 5px;
@@ -51,7 +50,6 @@
   border: 1px solid #f5c6cb;
 }
 
-/* Form Styles */
 .form-group {
   margin-bottom: 20px;
 }
@@ -89,7 +87,6 @@
   margin-top: 5px;
 }
 
-/* Button */
 .btn-primary {
   width: 100%;
   padding: 12px;
@@ -113,7 +110,6 @@
   cursor: not-allowed;
 }
 
-/* Signup Link */
 .signup-link {
   text-align: center;
   margin-top: 20px;
